@@ -1,25 +1,34 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel.js");
+const User = require("../models/userModel");
 
 // @desc    Register a new user
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
+  const { username, email, password } = req.body;
+  if (!username || !email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
   }
 
   // Check if email matches any existing user,
   // throw error if a match is found
-  const userExists = await User.findOne({ email });
+  const emailExists = await User.findOne({ email });
 
-  if (userExists) {
+  if (emailExists) {
     res.status(400);
-    throw new Error("User already exists");
+    throw new Error("Email already in use");
+  }
+
+  // Check if email matches any existing user,
+  // throw error if a match is found
+  const usernameExists = await User.findOne({ username });
+
+  if (usernameExists) {
+    res.status(400);
+    throw new Error("Username already in use");
   }
 
   // Hash password
@@ -28,7 +37,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   // Create user
   const user = await User.create({
-    name,
+    username,
     email,
     password: hashedPassword,
   });
@@ -36,7 +45,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       _id: user._id,
-      name: user.name,
+      name: user.username,
       email: user.email,
       token: generateToken(user._id),
     });
@@ -58,7 +67,7 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user._id,
-      name: user.name,
+      username: user.username,
       email: user.email,
       token: generateToken(user._id),
     });
@@ -72,8 +81,8 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route   GET /api/users/me
 // @access  Private
 const getMe = asyncHandler(async (req, res) => {
-  const { _id, name, email } = await User.findById(req.user.id);
-  res.json({ id: _id, name, email });
+  const { _id, username, email } = await User.findById(req.user.id);
+  res.json({ id: _id, username, email });
 });
 
 // Generate JWT
