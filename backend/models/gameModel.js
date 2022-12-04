@@ -12,7 +12,7 @@ const playerSchema = mongoose.Schema({
 });
 
 const scoreSchema = mongoose.Schema({
-  player: {
+  userID: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
@@ -39,9 +39,13 @@ const gameSchema = mongoose.Schema({
     type: String,
     required: false,
   },
-  buttonText: {
+  btnTxt: {
     type: String,
-    required: [true, "Please add a button text"],
+    required: false,
+  },
+  incVal: {
+    type: Number,
+    required: false,
   },
   startDate: {
     type: Date,
