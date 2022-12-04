@@ -8,9 +8,19 @@ const User = require("../models/userModel");
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
-  if (!username || !email || !password) {
+  if (!username) {
     res.status(400);
-    throw new Error("Please add all fields");
+    throw new Error("Please add a username");
+  }
+
+  if (!email) {
+    res.status(400);
+    throw new Error("Please add a email");
+  }
+
+  if (!password) {
+    res.status(400);
+    throw new Error("Please add a password");
   }
 
   // Check if email matches any existing user,
