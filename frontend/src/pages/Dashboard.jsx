@@ -1,10 +1,16 @@
 import React from "react";
+import GameList from "../components/GameList";
+import GameView from "../components/GameView";
 
 function Dashboard() {
   return (
     <div className="dashboard">
-      <div className="game-selector">This is the game selector</div>
-      <div className="game-view">This is the game view</div>
+      <div className="game-selector">
+        <GameList />
+      </div>
+      <div className="game-view">
+        <GameView />
+      </div>
     </div>
   );
 }
