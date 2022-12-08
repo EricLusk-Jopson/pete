@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// TODO - routing for games API
+// routing for games API
 app.use("/api/games", require("./routes/gameRoutes"));
 
 // routing for users api

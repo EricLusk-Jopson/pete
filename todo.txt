@@ -1,9 +1,6 @@
-1. Create db on Mongo
-2. Write DB connection method in backend/config/bd.js
-3. Add custom error handling and auth middleware in backend/middleware
 
+1. Add Create Game Page
+2. Add Search Functionality
+3. Render Game in gameview using location id
+4. CSS
 
-TODO - Create Game Route (POST)
-TODO - Update Game Route (POST)
-TODO - Get Many Games Route (GET)
-TODO - Get One Game Route (GET)

@@ -1,12 +1,15 @@
 const asyncHandler = require("express-async-handler");
 const Game = require("../models/gameModel");
 const { getDatesBetween } = require("../helpers/getDatesBetween");
+const { generateGameFilters } = require("../helpers/generateGameFilters");
 
 // @desc    Get games
 // @route   GET /api/games
 // @access  Public
 const getGames = asyncHandler(async (req, res) => {
-  const games = await Game.find();
+  const { limit } = req.query;
+  const filter = generateGameFilters(req.query);
+  const games = await Game.find(filter).limit(limit);
   res.status(200).json(games);
 });
 
