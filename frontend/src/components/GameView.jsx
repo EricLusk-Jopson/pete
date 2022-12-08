@@ -1,8 +1,7 @@
-import React from "react";
-import { useState } from "react";
+import { React, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import GameTable from "./GameTable";
 
 const GameView = () => {
   const [activeGame, setActiveGame] = useState(undefined);
@@ -33,35 +32,7 @@ const GameView = () => {
           <p>{activeGame.description}</p>
           <button>{activeGame.btnTxt}</button>
           <div className="table-container">
-            <table className="game-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  {activeGame.players.map((player) => {
-                    return <th>{player.username}</th>;
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {activeGame.scoreBoard.map((dailyScores) => {
-                  console.log(dailyScores);
-                  return (
-                    <tr>
-                      <td>{dailyScores.date}</td>
-                      {activeGame.players.map((player) => {
-                        const scores = dailyScores.scores;
-                        const match = scores.find((score) => {
-                          return (
-                            score.userID.toString() === player.userID.toString()
-                          );
-                        });
-                        return <td>{match ? match.score : 0}</td>;
-                      })}
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <GameTable activeGame={activeGame} />
           </div>
         </>
       )}

@@ -1,6 +1,6 @@
 
 1. Add Create Game Page
-2. Add Search Functionality
-3. Render Game in gameview using location id
+2. Handle join game
+3. Handle inc game
 4. CSS
 

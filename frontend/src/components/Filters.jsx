@@ -24,10 +24,6 @@ const Filters = () => {
     }));
   };
 
-  // useEffect(() => {
-  //   dispatch(setFilters(selectionData));
-  // }, [selectionData, dispatch]);
-
   return (
     <div className="search-container">
       <form className="search-form" onSubmit={onSearch}>
