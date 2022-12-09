@@ -58,6 +58,10 @@ const gameSchema = mongoose.Schema({
   players: [playerSchema],
   host: playerSchema,
   scoreBoard: [dailyScoresSchema],
+  dateAdded: {
+    type: Date,
+    required: [true, "Please add a dateAdded"],
+  },
 });
 
 module.exports = mongoose.model("Game", gameSchema);

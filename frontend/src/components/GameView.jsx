@@ -11,22 +11,21 @@ const GameView = () => {
   console.log(games);
 
   useEffect(() => {
-    if (!games) {
-      return;
-    }
-    const newActiveGame = games.find(
-      (game) => game._id.toString() === location.pathname.substring(1)
-    );
-    if (newActiveGame) {
-      setActiveGame(newActiveGame);
+    if (games && games.length > 0) {
+      const newActiveGame = games.find(
+        (game) => game._id.toString() === location.pathname.substring(1)
+      );
+      if (newActiveGame) {
+        setActiveGame(newActiveGame);
+      }
     }
   }, [location.pathname, games]);
 
-  console.log(activeGame);
+  // console.log(activeGame);
 
   return (
     <div className="view">
-      {activeGame && (
+      {activeGame ? (
         <>
           <h2>{activeGame.name}</h2>
           <p>{activeGame.description}</p>
@@ -35,6 +34,8 @@ const GameView = () => {
             <GameTable activeGame={activeGame} />
           </div>
         </>
+      ) : (
+        <p>Select a game</p>
       )}
     </div>
   );

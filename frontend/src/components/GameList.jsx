@@ -33,6 +33,7 @@ const GameList = () => {
       {user && <Filters />}
       <div className="gamelist">
         {games &&
+          games.length > 0 &&
           games.map((game) => {
             return <GameCard game={game} key={game._id} />;
           })}

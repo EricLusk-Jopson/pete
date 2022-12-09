@@ -57,6 +57,15 @@ function Register() {
     }
   };
 
+  const onCancel = (e) => {
+    e.preventDefault();
+    setFormData({
+      email: "",
+      password: "",
+    });
+    navigate("/");
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -121,6 +130,11 @@ function Register() {
               </button>
             </div>
           </form>
+          <div className="form-group">
+            <button type="cancel" className="btn btn-block" onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
         </section>
       </div>
     </>
