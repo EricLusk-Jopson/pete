@@ -9,7 +9,7 @@ const { generateGameFilters } = require("../helpers/generateGameFilters");
 const getGames = asyncHandler(async (req, res) => {
   const { limit } = req.query;
   const filter = generateGameFilters(req.query);
-  const games = await Game.find(filter).limit(limit);
+  const games = await Game.find(filter).sort({ dateAdded: -1 }).limit(limit);
   res.status(200).json(games);
 });
 
@@ -17,7 +17,8 @@ const getGames = asyncHandler(async (req, res) => {
 // @route   GET /api/games
 // @access  Public
 const getOneGame = asyncHandler(async (req, res) => {
-  const game = await Game.findById(req.params.id);
+  console.log(req);
+  const game = await Game.findById(req.query._id);
   res.status(200).json(game);
 });
 
@@ -61,6 +62,7 @@ const setGame = asyncHandler(async (req, res) => {
     startDate: req.dates.start,
     endDate: req.dates.end,
     scoreBoard: scoreBoard,
+    dateAdded: new Date(),
   });
   res.status(200).json(game);
 });

@@ -63,6 +63,10 @@ body {
   align-items: center;
 }
 
+.increment-control {
+  margin: 0px 10px
+}
+
 .form,
 .content {
   margin: 0 auto;
@@ -72,7 +76,10 @@ body {
 .form-group {
   margin-bottom: 10px;
   width: 100%;
-
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
 }
 

@@ -48,6 +48,15 @@ function Login() {
     dispatch(login(userData));
   };
 
+  const onCancel = (e) => {
+    e.preventDefault();
+    setFormData({
+      email: "",
+      password: "",
+    });
+    navigate("/");
+  };
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -84,11 +93,16 @@ function Login() {
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-block">
+              <button type="submit" className="btn btn-form btn-block">
                 Submit
               </button>
             </div>
           </form>
+          <div className="form-group">
+            <button type="cancel" className="btn btn-block" onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
         </section>
       </div>
     </>
