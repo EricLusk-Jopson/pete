@@ -17,7 +17,6 @@ const getGames = asyncHandler(async (req, res) => {
 // @route   GET /api/games
 // @access  Public
 const getOneGame = asyncHandler(async (req, res) => {
-  console.log(req);
   const game = await Game.findById(req.query._id);
   res.status(200).json(game);
 });
@@ -35,6 +34,7 @@ const setGame = asyncHandler(async (req, res) => {
   // Handle default values for optional fields
   const incVal = req.body.incVal ?? 1;
   const btnTxt = req.body.btnTxt ?? `Click me to add +${incVal} points`;
+  const joinable = req.body.joinable ?? false;
   const host = {
     userID: req.user.id,
     username: req.user.username,
@@ -62,6 +62,7 @@ const setGame = asyncHandler(async (req, res) => {
     startDate: req.dates.start,
     endDate: req.dates.end,
     scoreBoard: scoreBoard,
+    joinable: joinable,
     dateAdded: new Date(),
   });
   res.status(200).json(game);
@@ -104,12 +105,13 @@ const joinGame = asyncHandler(async (req, res) => {
   });
 
   // Add updated players and scoreBoard to db
-  const updatedGame = await Game.findByIdAndUpdate(req.params.id, {
+  await Game.findByIdAndUpdate(req.params.id, {
     players: players,
     scoreBoard: scoreBoard,
   });
+  const confirmation = await Game.findById(req.params.id);
 
-  res.status(200).json(updatedGame);
+  res.status(200).json(confirmation);
 });
 
 // @desc    Get goals
@@ -150,11 +152,54 @@ const incGame = asyncHandler(async (req, res) => {
   scoreBoard[scoreBoardIndex].scores[playerIndex].score += game.incVal;
 
   // Add updated players and scoreBoard to db
-  const updatedGame = await Game.findByIdAndUpdate(req.params.id, {
+  await Game.findByIdAndUpdate(req.params.id, {
     scoreBoard: scoreBoard,
   });
 
-  res.status(200).json(updatedGame);
+  const confirmation = await Game.findById(req.params.id);
+
+  res.status(200).json(confirmation);
+});
+
+// @desc    Get goals
+// @route   GET /api/games/setjoinable/:id
+// @access  Private
+const toggleJoinability = asyncHandler(async (req, res) => {
+  const game = await Game.findById(req.params.id);
+  const joinable = game.joinable;
+
+  // Check if game exists and throw error if it doesn't
+  if (!game) {
+    res.status(400);
+    throw new Error("Game not found");
+  }
+
+  // Check that player is already a member of the game
+  const player = game.players.find((player) => {
+    return player.userID.toString() === req.user.id;
+  });
+
+  if (!player) {
+    res.status(409);
+    throw new Error("Player is not a member of this game");
+  }
+
+  // Check that player is game host
+  const isHost = req.user.id === game.host.userID.toString();
+
+  if (!isHost) {
+    res.status(409);
+    throw new Error("player is not the game host");
+  }
+
+  // Add updated players and scoreBoard to db
+  await Game.findByIdAndUpdate(req.params.id, {
+    joinable: !joinable,
+  });
+
+  const confirmation = await Game.findById(req.params.id);
+
+  res.status(200).json(confirmation);
 });
 
 module.exports = {
@@ -163,4 +208,5 @@ module.exports = {
   setGame,
   joinGame,
   incGame,
+  toggleJoinability,
 };
