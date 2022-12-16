@@ -61,6 +61,7 @@ function Create() {
                 value={name}
                 placeholder="Enter the tracker name"
                 onChange={onChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -83,6 +84,7 @@ function Create() {
                 value={btnTxt}
                 placeholder="Enter the tracker button text"
                 onChange={onChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -105,6 +107,7 @@ function Create() {
                 name="startDate"
                 value={startDate}
                 onChange={onChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -115,10 +118,14 @@ function Create() {
                 name="endDate"
                 value={endDate}
                 onChange={onChange}
+                required
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-form btn-block">
+              <button
+                type="submit"
+                className="btn btn-form btn-block btn-important"
+              >
                 Submit
               </button>
             </div>

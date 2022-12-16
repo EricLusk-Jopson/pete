@@ -19,12 +19,6 @@ const GameView = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(
-      "is game incrementable? ",
-      isGameActive(activeGame),
-      "is game finished? ",
-      isGameFinished(activeGame)
-    );
     setIsIncrementable(isGameActive(activeGame));
     setIsFinished(isGameFinished(activeGame));
   }, [activeGame]);
@@ -117,7 +111,9 @@ const GameView = () => {
               </div>
             </>
           ) : (
-            <p>Select a game</p>
+            <div className="game-view-placeholder">
+              <p>Select a game</p>
+            </div>
           )}
         </>
       )}

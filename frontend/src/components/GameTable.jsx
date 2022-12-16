@@ -6,7 +6,7 @@ const GameTable = ({ activeGame }) => {
 
   const isActivePlayer = (player) => {
     const res = { color: "inherit" };
-    if (player.userID === user._id.toString()) {
+    if (user && player.userID === user._id.toString()) {
       res.color = "#3FB950";
     }
     return res;

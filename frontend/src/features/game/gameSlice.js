@@ -181,26 +181,26 @@ export const gameSlice = createSlice({
         state.games = null;
       })
       .addCase(joinGame.pending, (state) => {
-        state.isGameLoading = true;
+        // state.isGameLoading = true;
       })
       .addCase(joinGame.fulfilled, (state, action) => {
-        state.isGameLoading = false;
+        // state.isGameLoading = false;
         state.isSuccess = true;
       })
       .addCase(joinGame.rejected, (state, action) => {
-        state.isGameLoading = false;
+        // state.isGameLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
       .addCase(incrementGame.pending, (state) => {
-        state.isGameLoading = true;
+        // state.isGameLoading = true;
       })
       .addCase(incrementGame.fulfilled, (state, action) => {
-        state.isGameLoading = false;
+        // state.isGameLoading = false;
         state.isSuccess = true;
       })
       .addCase(incrementGame.rejected, (state, action) => {
-        state.isGameLoading = false;
+        // state.isGameLoading = false;
         state.isError = true;
         state.message = action.payload;
       });
