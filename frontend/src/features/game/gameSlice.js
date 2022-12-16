@@ -12,7 +12,8 @@ const initialState = {
   games: null,
   isError: false,
   isSuccess: false,
-  isLoading: false,
+  isGameLoading: false,
+  isSearchLoading: false,
   message: "",
 };
 
@@ -124,7 +125,8 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      state.isLoading = false;
+      state.isGameLoading = false;
+      state.isSearchLoading = false;
       state.isError = false;
       state.isSuccess = false;
       state.message = ";";
@@ -139,66 +141,66 @@ export const gameSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getMany.pending, (state) => {
-        state.isLoading = true;
+        state.isSearchLoading = true;
       })
       .addCase(getMany.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isSearchLoading = false;
         state.isSuccess = true;
         state.games = action.payload;
       })
       .addCase(getMany.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isSearchLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.games = null;
       })
       .addCase(getOne.pending, (state) => {
-        state.isLoading = true;
+        state.isGameLoading = true;
       })
       .addCase(getOne.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isSuccess = true;
       })
       .addCase(getOne.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
       .addCase(create.pending, (state) => {
-        state.isLoading = true;
+        state.isGameLoading = true;
       })
       .addCase(create.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isSuccess = true;
         state.games = action.payload;
       })
       .addCase(create.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isError = true;
         state.message = action.payload;
         state.games = null;
       })
       .addCase(joinGame.pending, (state) => {
-        state.isLoading = true;
+        state.isGameLoading = true;
       })
       .addCase(joinGame.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isSuccess = true;
       })
       .addCase(joinGame.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
       .addCase(incrementGame.pending, (state) => {
-        state.isLoading = true;
+        state.isGameLoading = true;
       })
       .addCase(incrementGame.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isSuccess = true;
       })
       .addCase(incrementGame.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isGameLoading = false;
         state.isError = true;
         state.message = action.payload;
       });

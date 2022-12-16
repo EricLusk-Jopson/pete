@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { getMany } from "../features/game/gameSlice";
 import Filters from "./Filters";
 import GameCard from "./GameCard";
+import Spinner from "./Spinner";
 import prepareFilters from "../helpers/prepareFilters";
 
 const GameList = () => {
   const isMounted = useRef(false);
   const { games, gamesPerPage, filters } = useSelector((state) => state.games);
   const { user } = useSelector((state) => state.auth);
+  const { isSearchLoading } = useSelector((state) => state.games);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,6 +24,7 @@ const GameList = () => {
 
   return (
     <div
+      className="game-selector"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -32,11 +35,17 @@ const GameList = () => {
     >
       {user && <Filters />}
       <div className="gamelist">
-        {games &&
-          games.length > 0 &&
-          games.map((game) => {
-            return <GameCard game={game} key={game._id} />;
-          })}
+        {isSearchLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            {games &&
+              games.length > 0 &&
+              games.map((game) => {
+                return <GameCard game={game} key={game._id} />;
+              })}
+          </>
+        )}
       </div>
     </div>
   );

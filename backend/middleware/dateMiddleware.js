@@ -12,7 +12,6 @@ const parseDate = (string) => {
 
 const validateGameDates = (req, res, next) => {
   const { startDate, endDate } = req.body;
-  console.log("startdate, enddate: ", startDate, endDate);
 
   // Check that start and end dates exist
   if (!startDate || !endDate) {
@@ -23,10 +22,6 @@ const validateGameDates = (req, res, next) => {
   const today = new Date(new Date().setHours(0, 0, 0, 0));
   const startDateMidnight = parseDate(startDate);
   const endDateMidnight = parseDate(endDate);
-
-  console.log(today, startDateMidnight, endDateMidnight);
-  console.log(today.getTime());
-  console.log(startDateMidnight.getTime());
 
   // Check that start date is not before today
   if (today.getTime() > startDateMidnight.getTime()) {

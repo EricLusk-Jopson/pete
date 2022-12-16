@@ -5,12 +5,8 @@ import GameView from "../components/GameView";
 function Dashboard() {
   return (
     <div className="dashboard">
-      <div className="game-selector">
-        <GameList />
-      </div>
-      <div className="game-view">
-        <GameView />
-      </div>
+      <GameList />
+      <GameView />
     </div>
   );
 }

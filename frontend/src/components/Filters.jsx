@@ -1,5 +1,6 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import { useDispatch } from "react-redux";
+import { FaSearch } from "react-icons/fa";
 import { setFilters } from "../features/game/gameSlice";
 
 const Filters = () => {
@@ -25,29 +26,32 @@ const Filters = () => {
   };
 
   return (
-    <div className="search-container">
-      <form className="search-form" onSubmit={onSearch}>
-        <input
-          className="search-bar"
-          name="search"
-          type="string"
-          placeholder="search by name"
-          value={selectionData.search}
-          onChange={handleSelection}
-        ></input>
-        <select className="filter" name="owner" onChange={handleSelection}>
+    <form className="search-form" onSubmit={onSearch}>
+      <input
+        className="search-bar"
+        name="search"
+        type="string"
+        placeholder="search by name"
+        value={selectionData.search}
+        onChange={handleSelection}
+      ></input>
+      <div className="selector-container">
+        <select className="selector" name="owner" onChange={handleSelection}>
           <option value="all">All Games</option>
           <option value="mine">My Games</option>
         </select>
-        <select className="filter" name="status" onChange={handleSelection}>
+        <p>that are</p>
+        <select className="selector" name="status" onChange={handleSelection}>
           <option value="all">All</option>
           <option value="pending">Pending</option>
           <option value="active">Active</option>
           <option value="complete">Completed</option>
         </select>
-        <button>Filter Games</button>
-      </form>
-    </div>
+        <button className="btn btn-important search-btn">
+          <FaSearch />
+        </button>
+      </div>
+    </form>
   );
 };
 

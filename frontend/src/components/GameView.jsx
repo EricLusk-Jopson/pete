@@ -14,7 +14,7 @@ import isGameFinished from "../helpers/isGameFinished";
 const GameView = () => {
   const [isIncrementable, setIsIncrementable] = useState(false);
   const [isFinished, setIsFinished] = useState(true);
-  const { isLoading, activeGame } = useSelector((state) => state.games);
+  const { isGameLoading, activeGame } = useSelector((state) => state.games);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -56,7 +56,7 @@ const GameView = () => {
 
   return (
     <div className="view">
-      {isLoading ? (
+      {isGameLoading ? (
         <Spinner />
       ) : (
         <>
@@ -64,24 +64,22 @@ const GameView = () => {
             <>
               <div className="gameHeaderFlex">
                 <div className="gameHeaderDetails">
-                  <h2>{activeGame.name}</h2>
+                  <h1>{activeGame.name}</h1>
+
+                  {user &&
+                    activeGame.host.userID.toString() ===
+                      user._id.toString() && (
+                      <button
+                        className="btn text-btn"
+                        name="joinable"
+                        onClick={handleClick}
+                      >
+                        {activeGame.joinable ? "Joinable" : "Not joinable"}
+                      </button>
+                    )}
+
                   <p>{activeGame.description}</p>
                 </div>
-                {user &&
-                  activeGame.host.userID.toString() === user._id.toString() && (
-                    <div className="gameHeaderJoinable">
-                      <span>
-                        <p>{`Joinable: ${activeGame.joinable ?? false}`}</p>
-                        <button
-                          className="filter"
-                          name="joinable"
-                          onClick={handleClick}
-                        >
-                          {"(change)"}
-                        </button>
-                      </span>
-                    </div>
-                  )}
               </div>
 
               {user && (
@@ -89,16 +87,27 @@ const GameView = () => {
                   {activeGame.players.find((player) => {
                     return player.userID.toString() === user._id.toString();
                   }) ? (
-                    <button onClick={increment} disabled={!isIncrementable}>
-                      {activeGame.btnTxt}
-                    </button>
+                    <>
+                      {isIncrementable && (
+                        <button
+                          className="btn game-btn inc-btn"
+                          onClick={increment}
+                        >
+                          {activeGame.btnTxt}
+                        </button>
+                      )}
+                    </>
                   ) : (
-                    <button
-                      onClick={join}
-                      disabled={isFinished || !activeGame.joinable}
-                    >
-                      Join Game
-                    </button>
+                    <>
+                      {activeGame.joinable && !isFinished && (
+                        <button
+                          className="btn game-btn btn-important"
+                          onClick={join}
+                        >
+                          Join Game
+                        </button>
+                      )}
+                    </>
                   )}
                 </>
               )}

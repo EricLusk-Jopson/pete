@@ -42,10 +42,6 @@ function Create() {
     navigate("/");
   };
 
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
   return (
     <>
       <div className="form-container">
