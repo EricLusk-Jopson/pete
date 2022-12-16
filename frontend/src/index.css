@@ -4,11 +4,34 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #363B42 #161B22;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #363B42;
+  border-radius: 20px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #161B22;
+  border-radius: 20px;
+  border: 1px solid #363B42;
+}
+
+*::-webkit-scrollbar-corner {
+  background: rgba(0,0,0,0);
 }
 
 body {
   font-family: 'Poppins', sans-serif;
   height: 100vh;
+  background-color: #0D1117;
 }
 
 .header {
@@ -16,7 +39,8 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 20px 10px;
-  border-bottom: 1px solid #e6e6e6;
+  background-color: #161B22;
+  color: #828282;
   margin-bottom: 40px;
   height: 80px
 }
@@ -52,8 +76,11 @@ body {
   width: 30%;
 }
 
-.heading p {
+.logo {
   color: #828282;
+  background-color: #161B22;
+  font-weight: 700;
+
 }
 
 .form-container {
@@ -61,6 +88,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #828282;
+  
 }
 
 .increment-control {
@@ -85,11 +114,26 @@ body {
 
 .form-group input,
 .form-group textarea,
-.form-group select,
+.form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #363B42;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: inherit;
+  background-color: #161B22;
+  color: #828282;
+}
+
+.form-group input:focus-visible,
+.form-group textarea:focus-visible,
+.form-group select:focus-visible {
+  outline: thin double #6A949E;
+}
+
 .form-group .btn-block {
   width: 100%;
   padding: 10px;
-  border: 1px solid #e6e6e6;
   border-radius: 5px;
   margin-bottom: 10px;
   font-family: inherit;
@@ -107,7 +151,9 @@ body {
 
 .btn {
   padding: 5px 10px;
-  border: 1px solid rgb(50, 49, 49);
+  border: 1px solid ;
+  background-color: #0D1117;
+  color: #6A949E;
   border-radius: 5px;
   font-size: 14px;
   font-weight: 400;
@@ -119,12 +165,23 @@ body {
   justify-content: center;
 }
 
+.btn:hover {
+  background-color: #6A949E;
+  color: #ffffff
+}
+
+.btn-important {
+  background-color: #13233A;
+  color: #58A6FF;
+}
+
+.btn-important:hover {
+  background-color: #58A6FF;
+}
+
 .btn-form {
   padding: 10px 20px;
-  border: 1px solid #000;
   border-radius: 5px;
-  background: #000;
-  color: #fff;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
@@ -139,27 +196,93 @@ body {
   display: inline-flex;
   width: 100%;
   height: calc(100vh - 160px);
-  background-color: bisque;
+  background-color: #0D1117;
+  color: #828282;
 }
 
 .game-selector {
   display: flex;
   flex-basis: 30%;
-  justify-content: center;
+  height: 100%;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: 100%;
+  padding: 0px 20px 30px 20px;
+  
+}
+
+.search-bar {
+  width: 100%;
+  background-color: #161B22;
+  color: #363B42;
+  height: 1.5rem;
+  border-radius: 25px;
+  border: 1px solid;
+  margin-top: 2px;
+  margin-bottom: 8px;
+  padding: 0px 5px;
+}
+
+.search-bar:focus-visible {
+  outline: none;
+}
+
+.selector-container {
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  border: 1px solid black;
-  padding: 0px;
+  width: 100%;
+  font-size: small;
+  justify-content: space-evenly;
+  padding-bottom: 5px;
+}
+
+.selector {
+  background-color: #161B22;
+  color: #6A949E;
+  height: 1.5rem;
+  border-radius: 5px ;
+  border: 1px solid #363B42;
+}
+
+.search-btn {
+  height: 1.5rem;
+  width: 25%;
 }
 
 .gamelist {
   width: 100%;
+  height: 100%;
   overflow-y: auto;
 }
 
 .gamecard {
-  padding: 10px;
-  height: 80px;
-  width: 100%
+  padding: 20px 20px;
+  max-height: 180px;
+  border-bottom: 1px solid #363B42;
+  overflow: hidden;
+}
+
+.gamecard:hover {
+  background-color: #161B22;
+}
+
+.gamecard-title {
+  height: 24px;
+  color: #828282;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.gamecard-description {
+  height: 48px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .gamecard .gamelink {
@@ -168,45 +291,132 @@ body {
 
 .game-view {
   display: flex;
-  flex-basis: 70%;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   overflow-y: auto;
-}
+} 
+
+.game-view-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
 
 .view{
   display: flex;
+  flex-basis: 70%;
   flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
-  border: 1px solid black;
+  padding: 24px;
   overflow-y: auto;
   height: 100%;
   width: 100%;
+}
+
+.gameHeaderDetails {
+  margin-bottom: 5px;
+}
+
+.gameHeaderDetails h1{
+  color: #828282;
+}
+
+.gameHeaderJoinable {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.text-btn {
+  background-color: none;
+  border: none;
+  height: 1rem;
+  font-size: 1rem;
+  padding: 0px;
+}
+
+.text-btn:hover {
+  background: none;
+  border: none;
+  height: 1rem;
+}
+
+.join-btn {
+  color: #3FB950;
+  background-color: #161B22;
+}
+
+.join-btn:hover {
+  background-color: #3FB950;
+  color: #ffffff;
+}
+
+.inc-btn {
+  color: #3FB950;
+  background-color: #161B22;
+}
+
+.inc-btn:hover {
+  background-color: #3FB950;
+  color: #ffffff;
+}
+
+.game-btn {
+  margin: 10px 0px;
 }
 
 .table-container {
   height:90%;
   width: 100%;
-  overflow: auto;
+  overflow:scroll; 
+  background-color: #161B22;
+  border-radius: 5px;
 }
 
 .game-table {
+  table-layout: fixed;
   width: 100%;
+  /* height: 100%;  */
   text-align: left;
+  overflow: scroll;
+  background-color: #161B22;
+  border-radius: 5px;
+}
+
+
+.game-table thead {
+  position: sticky;
+  top: 0;
+  font-weight: bold;
+  height: 50px;
+  background-color: #161B22;
+  z-index: 1000;
+}
+
+td, th {
+  width: 180px;
+  max-height: 30px;
+  overflow: hidden;
+}
+
+tr {
+  height: 24px;
+  max-height: 30px;
+}
+
+.date-label {
+  position: sticky;
+  left: 0;
+  background-color: #161B22;
+  z-index: 900;
 }
 
 .loadingSpinnerContainer {
-  /* position: fixed; */
-  /* top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; */
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 5000;
+  /* background-color: rgba(0, 0, 0, 0.5); */
+  /* z-index: 5000; */
   display: flex;
   justify-content: center;
   align-items: center;

@@ -125,7 +125,10 @@ function Register() {
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-form btn-block">
+              <button
+                type="submit"
+                className="btn btn-form btn-block btn-important"
+              >
                 Submit
               </button>
             </div>

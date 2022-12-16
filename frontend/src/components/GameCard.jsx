@@ -17,8 +17,8 @@ const GameCard = ({ game }) => {
 
   return (
     <div className="gamecard" onClick={onClick}>
-      <h4 className="gameCard-title">{game.name}</h4>
-      <p className="gameCard-description">{game.description}</p>
+      <h4 className="gamecard-title">{game.name}</h4>
+      <p className="gamecard-description">{game.description}</p>
     </div>
   );
 };

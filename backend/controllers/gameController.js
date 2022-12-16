@@ -26,9 +26,14 @@ const getOneGame = asyncHandler(async (req, res) => {
 // @access  Private
 const setGame = asyncHandler(async (req, res) => {
   // Check for necessary fields
-  if (!req.body.name || !req.body.startDate || !req.body.endDate) {
+  if (
+    !req.body.name ||
+    !req.body.startDate ||
+    !req.body.endDate ||
+    !req.body.btnTxt
+  ) {
     res.status(400);
-    throw new Error("Make sure name and dates are provided");
+    throw new Error("Make sure name, dates and button text are provided");
   }
 
   // Handle default values for optional fields
@@ -55,7 +60,8 @@ const setGame = asyncHandler(async (req, res) => {
   const game = await Game.create({
     name: req.body.name,
     description: req.body.description ?? "",
-    btnTxt: req.body.btnTxt ?? btnTxt,
+    btnTxt:
+      req.body.btnTxt && req.body.btnTxt !== "" ? req.body.btnTxt : btnTxt,
     incVal: incVal,
     host: host,
     players: [host],

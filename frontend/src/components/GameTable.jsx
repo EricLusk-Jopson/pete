@@ -1,13 +1,38 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const GameTable = ({ activeGame }) => {
+  const { user } = useSelector((state) => state.auth);
+
+  const isActivePlayer = (player) => {
+    const res = { color: "inherit" };
+    if (user && player.userID === user._id.toString()) {
+      res.color = "#3FB950";
+    }
+    return res;
+  };
+
+  const isToday = (date) => {
+    const res = { color: "inherit" };
+    const today = new Date(new Date().setHours(0, 0, 0, 0));
+    const dateMidnight = new Date(date);
+    if (dateMidnight.getTime() === today.getTime()) {
+      res.color = "#3FB950";
+    }
+    return res;
+  };
+
   return (
     <table className="game-table">
       <thead>
         <tr>
-          <th>Date</th>
+          <th className="date-label">Date</th>
           {activeGame.players.map((player) => {
-            return <th key={`${player.username}`}>{player.username}</th>;
+            return (
+              <th key={`${player.username}`} style={isActivePlayer(player)}>
+                {player.username}
+              </th>
+            );
           })}
         </tr>
       </thead>
@@ -15,7 +40,9 @@ const GameTable = ({ activeGame }) => {
         {activeGame.scoreBoard.map((dailyScores) => {
           return (
             <tr key={`${dailyScores.date.toString()}`}>
-              <td>{dailyScores.date}</td>
+              <td className="date-label" style={isToday(dailyScores.date)}>
+                {new Date(dailyScores.date).toDateString()}
+              </td>
               {activeGame.players.map((player) => {
                 const scores = dailyScores.scores;
                 const match = scores.find((score) => {
