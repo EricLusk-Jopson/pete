@@ -5,6 +5,7 @@ const {
   getOneGame,
   joinGame,
   incGame,
+  toggleJoinability,
 } = require("../controllers/gameController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -16,5 +17,6 @@ router.route("/").get(getGames).post(protect, validateGameDates, setGame);
 router.route("/:id").get(getOneGame);
 router.route("/join/:id").post(protect, joinGame);
 router.route("/inc/:id").post(protect, incGame);
+router.route("/togglejoinable/:id").post(protect, toggleJoinability);
 
 module.exports = router;

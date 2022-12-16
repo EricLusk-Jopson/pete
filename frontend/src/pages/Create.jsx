@@ -2,8 +2,6 @@ import { useState, useEffect, React } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { create, setActiveGame } from "../features/game/gameSlice";
-import { toast } from "react-toastify";
-import Spinner from "../components/Spinner";
 
 function Create() {
   const [formData, setFormData] = useState({
@@ -30,8 +28,8 @@ function Create() {
   const onSubmit = (e) => {
     e.preventDefault();
     dispatch(create(formData)).then((res) => {
-      navigate(`/`);
-      // navigate(`/${res.payload._id}`);
+      dispatch(setActiveGame(res.payload));
+      navigate(`/${res.payload._id}`);
     });
   };
 

@@ -58,6 +58,10 @@ const gameSchema = mongoose.Schema({
   players: [playerSchema],
   host: playerSchema,
   scoreBoard: [dailyScoresSchema],
+  joinable: {
+    type: Boolean,
+    required: [true, "Please add an joinability flag"],
+  },
   dateAdded: {
     type: Date,
     required: [true, "Please add a dateAdded"],

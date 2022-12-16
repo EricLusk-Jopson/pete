@@ -7,22 +7,25 @@ const GameTable = ({ activeGame }) => {
         <tr>
           <th>Date</th>
           {activeGame.players.map((player) => {
-            return <th>{player.username}</th>;
+            return <th key={`${player.username}`}>{player.username}</th>;
           })}
         </tr>
       </thead>
       <tbody>
         {activeGame.scoreBoard.map((dailyScores) => {
-          console.log(dailyScores);
           return (
-            <tr>
+            <tr key={`${dailyScores.date.toString()}`}>
               <td>{dailyScores.date}</td>
               {activeGame.players.map((player) => {
                 const scores = dailyScores.scores;
                 const match = scores.find((score) => {
                   return score.userID.toString() === player.userID.toString();
                 });
-                return <td>{match ? match.score : 0}</td>;
+                return (
+                  <td key={`${dailyScores.date.toString()}:${player.username}`}>
+                    {match ? match.score : 0}
+                  </td>
+                );
               })}
             </tr>
           );

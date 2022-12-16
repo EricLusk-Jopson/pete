@@ -65,6 +65,60 @@ export const create = createAsyncThunk(
   }
 );
 
+// Join game
+export const joinGame = createAsyncThunk(
+  "games/join",
+  async (info, thunkAPI) => {
+    try {
+      return await gameService.joinGame(info);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Increment game
+export const incrementGame = createAsyncThunk(
+  "games/increment",
+  async (info, thunkAPI) => {
+    try {
+      return await gameService.incrementGame(info);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+// Increment game
+export const toggleJoinable = createAsyncThunk(
+  "games/toggleJoinable",
+  async (info, thunkAPI) => {
+    try {
+      return await gameService.toggleJoinable(info);
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const gameSlice = createSlice({
   name: "games",
   initialState,
@@ -104,13 +158,11 @@ export const gameSlice = createSlice({
       .addCase(getOne.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.games = action.payload;
       })
       .addCase(getOne.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.games = null;
       })
       .addCase(create.pending, (state) => {
         state.isLoading = true;
@@ -125,6 +177,30 @@ export const gameSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.games = null;
+      })
+      .addCase(joinGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(joinGame.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(joinGame.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+      })
+      .addCase(incrementGame.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(incrementGame.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(incrementGame.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       });
   },
 });
