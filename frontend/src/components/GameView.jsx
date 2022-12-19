@@ -1,7 +1,8 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import GameTable from "./GameTable";
 import {
+  getOne,
   incrementGame,
   joinGame,
   setActiveGame,
@@ -10,13 +11,36 @@ import {
 import Spinner from "./Spinner";
 import isGameActive from "../helpers/isGameActive";
 import isGameFinished from "../helpers/isGameFinished";
+import { useLocation } from "react-router-dom";
 
 const GameView = () => {
   const [isIncrementable, setIsIncrementable] = useState(false);
   const [isFinished, setIsFinished] = useState(true);
+  const isMounted = useRef(false);
   const { isGameLoading, activeGame } = useSelector((state) => state.games);
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const loadGameFromLocation = (id) => {
+    if (id) {
+      dispatch(getOne(id)).then((res) => {
+        console.log(res.payload);
+        console.log(res);
+        if (res.payload.length > 0) {
+          return;
+        }
+        dispatch(setActiveGame(res.payload));
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!activeGame && !isMounted.current) {
+      loadGameFromLocation(location.pathname.substring(1));
+    }
+    isMounted.current = true;
+  }, []);
 
   useEffect(() => {
     setIsIncrementable(isGameActive(activeGame));
@@ -33,7 +57,6 @@ const GameView = () => {
 
   const increment = (e) => {
     e.preventDefault();
-    console.log("increment button clicked");
     const info = { gameID: activeGame._id };
     dispatch(incrementGame(info)).then((res) =>
       dispatch(setActiveGame(res.payload))
@@ -76,35 +99,38 @@ const GameView = () => {
                 </div>
               </div>
 
-              {user && (
-                <>
-                  {activeGame.players.find((player) => {
-                    return player.userID.toString() === user._id.toString();
-                  }) ? (
-                    <>
-                      {isIncrementable && (
-                        <button
-                          className="btn game-btn inc-btn"
-                          onClick={increment}
-                        >
-                          {activeGame.btnTxt}
-                        </button>
-                      )}
-                    </>
-                  ) : (
-                    <>
-                      {activeGame.joinable && !isFinished && (
-                        <button
-                          className="btn game-btn btn-important"
-                          onClick={join}
-                        >
-                          Join Game
-                        </button>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
+              {user &&
+                activeGame &&
+                activeGame.players &&
+                activeGame.players.length > 0 && (
+                  <>
+                    {activeGame.players.find((player) => {
+                      return player.userID.toString() === user._id.toString();
+                    }) ? (
+                      <>
+                        {isIncrementable && (
+                          <button
+                            className="btn game-btn inc-btn"
+                            onClick={increment}
+                          >
+                            {activeGame.btnTxt}
+                          </button>
+                        )}
+                      </>
+                    ) : (
+                      <>
+                        {activeGame.joinable && !isFinished && (
+                          <button
+                            className="btn game-btn btn-important"
+                            onClick={join}
+                          >
+                            Join Game
+                          </button>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
 
               <div className="table-container">
                 <GameTable activeGame={activeGame} />

@@ -1,4 +1,4 @@
-import { React, useEffect, useRef } from "react";
+import { React, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getMany } from "../features/game/gameSlice";
 import Filters from "./Filters";
@@ -7,19 +7,14 @@ import Spinner from "./Spinner";
 import prepareFilters from "../helpers/prepareFilters";
 
 const GameList = () => {
-  const isMounted = useRef(false);
   const { games, gamesPerPage, filters } = useSelector((state) => state.games);
   const { user } = useSelector((state) => state.auth);
   const { isSearchLoading } = useSelector((state) => state.games);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isMounted.current) {
-      const preparedFilters = prepareFilters(filters, user);
-      dispatch(getMany({ limit: gamesPerPage, ...preparedFilters }));
-    } else {
-      isMounted.current = true;
-    }
+    const preparedFilters = prepareFilters(filters, user);
+    dispatch(getMany({ limit: gamesPerPage, ...preparedFilters }));
   }, [filters]);
 
   return (
