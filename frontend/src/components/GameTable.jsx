@@ -22,6 +22,9 @@ const GameTable = ({ activeGame }) => {
     return res;
   };
 
+  if (!activeGame || !activeGame.players || activeGame.players.length === 0) {
+    return <h2>Please select a game</h2>;
+  }
   return (
     <table className="game-table">
       <thead>

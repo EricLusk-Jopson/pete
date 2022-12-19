@@ -42,7 +42,7 @@ const Filters = () => {
         </select>
         <p>that are</p>
         <select className="selector" name="status" onChange={handleSelection}>
-          <option value="all">All</option>
+          <option value="all">All Statuses</option>
           <option value="pending">Pending</option>
           <option value="active">Active</option>
           <option value="complete">Completed</option>
