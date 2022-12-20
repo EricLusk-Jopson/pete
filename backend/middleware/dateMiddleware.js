@@ -8,14 +8,11 @@ const validateGameDates = (req, res, next) => {
   }
 
   const today = new Date(new Date().setHours(0, 0, 0, 0));
-  console.log(today, startDate, endDate);
   const startDateMidnight = new Date(startDate);
-  console.log(startDateMidnight);
   const endDateMidnight = new Date(endDate);
-  console.log(endDateMidnight);
 
   // Check that start date is not before today
-  if (today.getTime() > startDateMidnight.getTime()) {
+  if (today.getTime() - 86400000 > startDateMidnight.getTime()) {
     res.status(410);
     throw new Error("start date cannot occur before today");
   }
