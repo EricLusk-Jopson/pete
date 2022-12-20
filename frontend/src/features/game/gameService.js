@@ -58,10 +58,13 @@ const joinGame = async (info) => {
 };
 
 const incrementGame = async (info) => {
+  const newDate = new Date();
+  const offset = newDate.getTimezoneOffset();
+  console.log("offset: ", offset);
   const config = getConfiguredToken();
   const response = await axios.post(
     API_URL + "/inc/" + info.gameID,
-    {},
+    { offset: offset },
     config
   );
   return response.data;

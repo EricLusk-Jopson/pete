@@ -125,6 +125,8 @@ const joinGame = asyncHandler(async (req, res) => {
 // @access  Private
 const incGame = asyncHandler(async (req, res) => {
   const game = await Game.findById(req.params.id);
+  const timeZoneOffset = req.body.offset;
+  console.log(req.body);
 
   // Check if game exists and throw error if it doesn't
   if (!game) {
@@ -142,7 +144,12 @@ const incGame = asyncHandler(async (req, res) => {
     throw new Error("Player is not a member of this game");
   }
 
-  const today = new Date(new Date().setHours(0, 0, 0, 0));
+  const millisecondsAdjusted = new Date().getTime() - timeZoneOffset * 60000;
+
+  const adjustedDate = new Date(millisecondsAdjusted);
+  console.log("adjusted date: ", adjustedDate);
+  today = new Date(adjustedDate.setHours(0, 0, 0, 0));
+  console.log("today: ", today);
 
   // Increment entry on scoreboard
   const scoreBoard = [...game.scoreBoard];
