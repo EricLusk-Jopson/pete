@@ -1,15 +1,3 @@
-const asyncHandler = require("express-async-handler");
-const Game = require("../models/gameModel");
-
-const parseDate = (string) => {
-  try {
-    const parts = string.slice(0, 10).split("-");
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-  } catch (e) {
-    alert("dateString not properly formatted. ", e);
-  }
-};
-
 const validateGameDates = (req, res, next) => {
   const { startDate, endDate } = req.body;
 
@@ -20,12 +8,15 @@ const validateGameDates = (req, res, next) => {
   }
 
   const today = new Date(new Date().setHours(0, 0, 0, 0));
-  const startDateMidnight = parseDate(startDate);
-  const endDateMidnight = parseDate(endDate);
+  console.log(today, startDate, endDate);
+  const startDateMidnight = new Date(startDate);
+  console.log(startDateMidnight);
+  const endDateMidnight = new Date(endDate);
+  console.log(endDateMidnight);
 
   // Check that start date is not before today
   if (today.getTime() > startDateMidnight.getTime()) {
-    res.status(400);
+    res.status(410);
     throw new Error("start date cannot occur before today");
   }
 

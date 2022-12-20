@@ -53,6 +53,7 @@ export const create = createAsyncThunk(
   "games/create",
   async (info, thunkAPI) => {
     try {
+      console.log(info);
       return await gameService.create(info);
     } catch (error) {
       const message =
