@@ -8,6 +8,11 @@ const getConfiguredToken = () => {
   return config;
 };
 
+const getDatedInfo = (dateString) => {
+  const parts = dateString.slice(0, 10).split("-");
+  return new Date(parts[0], parts[1] - 1, parts[2]);
+};
+
 const getMany = async (info) => {
   const response = await axios.get(API_URL, {
     params: {
@@ -33,8 +38,12 @@ const create = async (info) => {
   if (!localStorage.getItem("user")) {
     return;
   }
+  const newInfo = { ...info };
+  newInfo.startDate = getDatedInfo(info.startDate);
+  newInfo.endDate = getDatedInfo(info.endDate);
+  console.log(newInfo);
   const config = getConfiguredToken();
-  const response = await axios.post(API_URL, info, config);
+  const response = await axios.post(API_URL, newInfo, config);
   return response.data;
 };
 
