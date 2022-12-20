@@ -31,7 +31,7 @@ const Filters = () => {
         className="search-bar"
         name="search"
         type="string"
-        placeholder="search by name"
+        placeholder="search by name or description"
         value={selectionData.search}
         onChange={handleSelection}
       ></input>

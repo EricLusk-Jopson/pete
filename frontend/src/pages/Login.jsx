@@ -83,8 +83,8 @@ function Login() {
             </div>
             <div className="form-group">
               <input
-                type="text"
-                className="form-control"
+                type="password"
+                className="form-control password"
                 id="password"
                 name="password"
                 value={password}
