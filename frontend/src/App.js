@@ -7,20 +7,23 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Create from "./pages/Create";
 import Header from "./components/Header";
+import { IsMobileContextProvider } from "./contextProviders/useIsMobile";
 
 function App() {
   return (
     <>
       <Router>
-        <div className="container">
-          <Header />
-          <Routes>
-            <Route path="/*" element={<Dashboard />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/create" element={<Create />} />
-          </Routes>
-        </div>
+        <IsMobileContextProvider>
+          <div className="container">
+            <Header />
+            <Routes>
+              <Route path="/*" element={<Dashboard />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/create" element={<Create />} />
+            </Routes>
+          </div>
+        </IsMobileContextProvider>
       </Router>
       <ToastContainer />
     </>

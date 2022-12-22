@@ -1,11 +1,13 @@
 import { useState, useEffect, React } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "../contextProviders/useIsMobile";
 import { toast } from "react-toastify";
 import { register, reset } from "../features/auth/authSlice";
 import Spinner from "../components/Spinner";
 
 function Register() {
+  const isMobile = useIsMobile();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -73,12 +75,14 @@ function Register() {
   return (
     <>
       <div className="form-container">
-        <section className="heading">
-          <h1>Register</h1>
-          <p>Create an account</p>
-        </section>
+        {!isMobile && (
+          <section className="heading">
+            <h1>Register</h1>
+            <p>Create an account</p>
+          </section>
+        )}
 
-        <section className="form">
+        <section className={`form form-mobile-${isMobile}`}>
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <input

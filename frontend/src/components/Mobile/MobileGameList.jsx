@@ -1,12 +1,13 @@
 import { React, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getMany } from "../features/game/gameSlice";
-import Filters from "./Filters";
-import GameCard from "./GameCard";
-import Spinner from "./Spinner";
-import prepareFilters from "../helpers/prepareFilters";
+import { getMany } from "../../features/game/gameSlice";
+import Filters from "../Filters";
+import Spinner from "../Spinner";
+import prepareFilters from "../../helpers/prepareFilters";
+import MobileGameView from "./MobileGameView";
+import GameCard from "../GameCard";
 
-const GameList = () => {
+const MobileGameList = () => {
   const { games, gamesPerPage, filters, activeGame } = useSelector(
     (state) => state.games
   );
@@ -40,14 +41,19 @@ const GameList = () => {
               games.length > 0 &&
               games.map((game) => {
                 return (
-                  <GameCard
-                    game={game}
-                    key={game._id}
-                    isOpen={
-                      activeGame &&
-                      game._id.toString() === activeGame._id.toString()
-                    }
-                  />
+                  <div className="gamelist-item" key={game._id}>
+                    <GameCard
+                      game={game}
+                      key={`${game._id}-card`}
+                      isOpen={
+                        activeGame && activeGame._id.toString() === game._id
+                      }
+                    />
+                    {activeGame &&
+                      game._id.toString() === activeGame._id.toString() && (
+                        <MobileGameView key={`${game._id}-game`} />
+                      )}
+                  </div>
                 );
               })}
           </>
@@ -57,4 +63,4 @@ const GameList = () => {
   );
 };
 
-export default GameList;
+export default MobileGameList;
