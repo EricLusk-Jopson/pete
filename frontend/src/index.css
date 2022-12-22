@@ -76,6 +76,14 @@ body {
   width: 30%;
 }
 
+.heading-mobile-true {
+  width: 100%;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+}
+
 .logo {
   color: #828282;
   background-color: #161B22;
@@ -89,6 +97,8 @@ body {
   justify-content: center;
   align-items: center;
   color: #828282;
+  height: calc(100vh - 160px);
+  width: 100%;
   
 }
 
@@ -100,6 +110,11 @@ body {
 .content {
   margin: 0 auto;
   width: 30%;
+}
+
+.form-mobile-true {
+  width: 100%;
+  padding: 20px;
 }
 
 .form-group {
@@ -204,12 +219,12 @@ body {
   display: flex;
   flex-basis: 30%;
   height: 100%;
+  color: #828282
 }
 
 .search-form {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   width: 100%;
   padding: 0px 20px 30px 20px;
   
@@ -263,7 +278,6 @@ body {
 
 .gamecard {
   padding: 20px 20px;
-  max-height: 180px;
   border-bottom: 1px solid #363B42;
   overflow: hidden;
 }
@@ -290,6 +304,15 @@ body {
   text-decoration: none;
 }
 
+.gamecard-active-true {
+  background-color: #161B22;
+}
+
+.gamecard-expanded-true {
+  max-height: 500px;
+  background-color: #3FB950;
+}
+
 .game-view {
   display: flex;
   justify-content: center;
@@ -313,6 +336,7 @@ body {
   overflow-y: auto;
   height: 100%;
   width: 100%;
+  transition: all 1s;
 }
 
 .gameHeaderDetails {
@@ -375,10 +399,18 @@ body {
   border-radius: 5px;
 }
 
+.table-container-mobile-true {
+  height:300px;
+  width: 100%;
+  overflow:scroll; 
+  background-color: #161B22;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
 .game-table {
   table-layout: fixed;
   width: 100%;
-  /* height: 100%;  */
   text-align: left;
   overflow: scroll;
   background-color: #161B22;
@@ -392,11 +424,15 @@ body {
   font-weight: bold;
   height: 50px;
   background-color: #161B22;
-  z-index: 1000;
+  z-index: 100;
+}
+
+.thead-mobile-true {
+  font-size: small;
 }
 
 td, th {
-  width: 180px;
+  width: 120px;
   max-height: 30px;
   overflow: hidden;
 }
@@ -410,14 +446,12 @@ tr {
   position: sticky;
   left: 0;
   background-color: #161B22;
-  z-index: 900;
+  width: 80px;
 }
 
 .loadingSpinnerContainer {
   width: 100%;
   height: 100%;
-  /* background-color: rgba(0, 0, 0, 0.5); */
-  /* z-index: 5000; */
   display: flex;
   justify-content: center;
   align-items: center;

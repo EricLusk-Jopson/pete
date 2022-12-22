@@ -1,9 +1,12 @@
 import { useState, React } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "../contextProviders/useIsMobile";
 import { create, setActiveGame } from "../features/game/gameSlice";
 
 function Create() {
+  const isMobile = useIsMobile();
+  console.log(isMobile);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -45,12 +48,14 @@ function Create() {
   return (
     <>
       <div className="form-container">
-        <section className="heading">
-          <h1>New Tracker</h1>
-          <p>Create a new tracker</p>
-        </section>
+        {!isMobile && (
+          <section className="heading">
+            <h1>New Tracker</h1>
+            <p>Create a new tracker</p>
+          </section>
+        )}
 
-        <section className="form">
+        <section className={`form form-mobile-${isMobile}`}>
           <form onSubmit={onSubmit}>
             <div className="form-group">
               <input

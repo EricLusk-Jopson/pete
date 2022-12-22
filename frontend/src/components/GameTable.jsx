@@ -1,7 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { useIsMobile } from "../contextProviders/useIsMobile";
 
 const GameTable = ({ activeGame }) => {
+  const isMobile = useIsMobile();
   const { user } = useSelector((state) => state.auth);
 
   const isActivePlayer = (player) => {
@@ -27,9 +29,9 @@ const GameTable = ({ activeGame }) => {
   }
   return (
     <table className="game-table">
-      <thead>
+      <thead className={`thead-mobile-${isMobile}`}>
         <tr>
-          <th className="date-label">Date</th>
+          <th className="date-label date-label-header">Date</th>
           {activeGame.players.map((player) => {
             return (
               <th key={`${player.username}`} style={isActivePlayer(player)}>
@@ -44,7 +46,9 @@ const GameTable = ({ activeGame }) => {
           return (
             <tr key={`${dailyScores.date.toString()}`}>
               <td className="date-label" style={isToday(dailyScores.date)}>
-                {new Date(dailyScores.date).toDateString()}
+                {isMobile
+                  ? new Date(dailyScores.date).toDateString().substring(4, 10)
+                  : new Date(dailyScores.date).toDateString()}
               </td>
               {activeGame.players.map((player) => {
                 const scores = dailyScores.scores;
