@@ -7,12 +7,12 @@ const IsMobileContextProvider = (props) => {
     width: window.innerWidth,
     height: window.innerHeight,
   };
-  let isMobileView = dimensions.width <= 600;
+  let isMobileView = dimensions.width <= 800;
 
   const handleWindowSizeChange = (e) => {
     dimensions.width = window.innerWidth;
     dimensions.height = window.innerHeight;
-    isMobileView = dimensions.width <= 600;
+    isMobileView = dimensions.width <= 800;
     console.log(isMobileView);
   };
 
